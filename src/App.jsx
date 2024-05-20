@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import "./App.css";
+import List from "./components/List";
+import Form from "./components/Form";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const initial = [
+    { id: 0, title: "제목", content: "내용", isDone: false },
+    { id: 1, title: "제목1", content: "내용1", isDone: true },
+  ];
+  const [todos, setTodos] = useState(initial);
 
+  const yetcompleted = todos.filter((el) => !el.isDone);
+  const completed = todos.filter((el) => el.isDone);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <h1>TodoList</h1>
+      <Form setTodos={setTodos} />
+      <List listTitle={"keep going"} setTodos={setTodos} todos={yetcompleted} />
+      <hr></hr>
+      <List listTitle={"complete"} setTodos={setTodos} todos={completed} />
+    </div>
+  );
+};
 
-export default App
+export default App;
